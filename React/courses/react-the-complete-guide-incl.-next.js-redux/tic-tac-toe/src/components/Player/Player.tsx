@@ -2,27 +2,29 @@ import { useState } from "react";
 import type { PlayerProps } from "./types";
 
 export const Player = ({
-  name,
+  initialName,
   symbol,
 }: PlayerProps) => {
+  const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
-  const handleEditButton = () => {
-    if(isEditing) {
-      // todo: set name using input value
-    }
 
+  const handleEditButton = () => {
     setIsEditing((editing) => !editing);
   };
 
-  let playerName = <span className="player-name">{name}</span>;
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPlayerName(event.target.value);
+  };
+
+  let editablePlayerName = <span className="player-name">{playerName}</span>;
   if (isEditing) {
-    playerName = <input type="text" required />;
+    editablePlayerName = <input type="text" required value={playerName} onChange={handleOnChange} />;
   }
 
   return (
     <li>
       <span className="player">
-        {playerName}
+        {editablePlayerName}
         <span className="player-symbol">{symbol}</span>
       </span>
       <button onClick={handleEditButton}>{isEditing ? "Save" : "Edit"}</button>
