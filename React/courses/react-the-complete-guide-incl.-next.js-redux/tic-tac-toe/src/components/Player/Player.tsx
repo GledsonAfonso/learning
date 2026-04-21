@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { PlayerProps } from "./types";
+import { useState } from 'react';
+import type { PlayerProps } from './types';
 
 export const Player = ({
   initialName,
@@ -27,7 +27,7 @@ export const Player = ({
         {editablePlayerName}
         <span className="player-symbol">{symbol}</span>
       </span>
-      <button onClick={handleEditButton}>{isEditing ? "Save" : "Edit"}</button>
+      <button onClick={handleEditButton}>{isEditing ? 'Save' : 'Edit'}</button>
     </li>
   );
 };

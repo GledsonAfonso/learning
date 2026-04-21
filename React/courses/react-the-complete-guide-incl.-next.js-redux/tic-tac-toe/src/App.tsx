@@ -1,5 +1,5 @@
-import { GameBoard } from "./components/GameBoard/GameBoard";
-import { Player } from "./components/Player/Player";
+import { GameBoard } from './components/GameBoard/GameBoard';
+import { Player } from './components/Player/Player';
 
 export const App = () => {
   return (
