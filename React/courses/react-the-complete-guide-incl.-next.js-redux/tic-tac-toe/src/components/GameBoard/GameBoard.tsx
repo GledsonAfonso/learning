@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { BoardGrid } from './types';
+import type { BoardGrid, GameBoardProps } from './types';
 
 const initialGameBoard: BoardGrid = [
   [null, null, null],
@@ -7,22 +7,27 @@ const initialGameBoard: BoardGrid = [
   [null, null, null],
 ];
 
-export const GameBoard = () => {
+export const GameBoard = ({
+  activePlayerSymbol,
+  onActivePlayerAction,
+}: GameBoardProps) => {
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
   const handleButtonClick = (
     rowIndex: number,
     columnIndex: number,
   ) => {
-    setGameBoard((previousGameBoard) => {
-      const updatedGameBoard = [...previousGameBoard.map(innerRow => [...innerRow])] as BoardGrid;
-      updatedGameBoard[rowIndex][columnIndex] = 'X';
+    setGameBoard((currentGameBoard) => {
+      const updatedGameBoard = [...currentGameBoard.map(innerRow => [...innerRow])] as BoardGrid;
+      updatedGameBoard[rowIndex][columnIndex] = activePlayerSymbol;
       return updatedGameBoard;
     });
+
+    onActivePlayerAction();
   };
 
   return (
-    <ol id="game-board">
+    <ol id='game-board'>
       {gameBoard.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>

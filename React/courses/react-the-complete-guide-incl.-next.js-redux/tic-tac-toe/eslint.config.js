@@ -23,7 +23,8 @@ export default defineConfig([
       'semi': ['error', 'always'],
       'eol-last': ['error', 'always'],
       'indent': ['error', 2],
-      'quotes': ['error', 'single']
+      'quotes': ['error', 'single'],
+      'jsx-quotes': ['error', 'prefer-single']
     },
   },
 ]);

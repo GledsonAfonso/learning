@@ -4,6 +4,7 @@ import type { PlayerProps } from './types';
 export const Player = ({
   initialName,
   symbol,
+  isActive,
 }: PlayerProps) => {
   const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
@@ -16,16 +17,16 @@ export const Player = ({
     setPlayerName(event.target.value);
   };
 
-  let editablePlayerName = <span className="player-name">{playerName}</span>;
+  let editablePlayerName = <span className='player-name'>{playerName}</span>;
   if (isEditing) {
-    editablePlayerName = <input type="text" required value={playerName} onChange={handleOnChange} />;
+    editablePlayerName = <input type='text' required value={playerName} onChange={handleOnChange} />;
   }
 
   return (
-    <li>
-      <span className="player">
+    <li className={isActive ? 'active' : undefined}>
+      <span className='player'>
         {editablePlayerName}
-        <span className="player-symbol">{symbol}</span>
+        <span className='player-symbol'>{symbol}</span>
       </span>
       <button onClick={handleEditButton}>{isEditing ? 'Save' : 'Edit'}</button>
     </li>
