@@ -1,3 +1,4 @@
+import { GameBoard } from "./components/GameBoard/GameBoard";
 import { Player } from "./components/Player/Player";
 
 export const App = () => {
@@ -14,7 +15,7 @@ export const App = () => {
             symbol="O"
           />
         </ol>
-        GAME BOARD
+        <GameBoard />
       </div>
       LOG 
     </main>
