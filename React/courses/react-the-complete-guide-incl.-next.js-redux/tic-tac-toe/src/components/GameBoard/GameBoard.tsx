@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { BoardGrid, GameBoardProps } from './types';
 
 const initialGameBoard: BoardGrid = [
@@ -8,23 +7,14 @@ const initialGameBoard: BoardGrid = [
 ];
 
 export const GameBoard = ({
-  activePlayerSymbol,
+  turns,
   onActivePlayerAction,
 }: GameBoardProps) => {
-  const [gameBoard, setGameBoard] = useState(initialGameBoard);
+  let gameBoard = initialGameBoard;
 
-  const handleButtonClick = (
-    rowIndex: number,
-    columnIndex: number,
-  ) => {
-    setGameBoard((currentGameBoard) => {
-      const updatedGameBoard = [...currentGameBoard.map(innerRow => [...innerRow])] as BoardGrid;
-      updatedGameBoard[rowIndex][columnIndex] = activePlayerSymbol;
-      return updatedGameBoard;
-    });
-
-    onActivePlayerAction();
-  };
+  for (const turn of turns) {
+    gameBoard[turn.square.row][turn.square.column] = turn.player;
+  }
 
   return (
     <ol id='game-board'>
@@ -33,7 +23,7 @@ export const GameBoard = ({
           <ol>
             {row.map((playerSymbol, columnIndex) => (
               <li key={columnIndex}>
-                <button onClick={() => handleButtonClick(rowIndex, columnIndex)}>{playerSymbol}</button>
+                <button onClick={() => onActivePlayerAction(rowIndex, columnIndex)}>{playerSymbol}</button>
               </li>
             ))
             }
