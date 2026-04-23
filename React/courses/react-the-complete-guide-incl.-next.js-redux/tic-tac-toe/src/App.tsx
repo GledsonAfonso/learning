@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { GameBoard } from './components/GameBoard/GameBoard';
 import type { GameTurn } from './components/GameBoard/types';
+import { Log } from './components/Log/Log';
 import { Player } from './components/Player/Player';
 
 export const App = () => {
@@ -51,7 +52,9 @@ export const App = () => {
           onActivePlayerAction={handleActivePlayerAction}
         />
       </div>
-      LOG 
+      <Log
+        turns={gameTurns}
+      />
     </main>
   );
 };
