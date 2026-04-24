@@ -21,7 +21,7 @@ export const GameBoard = ({
           <ol>
             {row.map((playerSymbol, columnIndex) => (
               <li key={columnIndex}>
-                <button onClick={() => onActivePlayerAction(rowIndex, columnIndex)}>{playerSymbol}</button>
+                <button disabled={playerSymbol !== null} onClick={() => onActivePlayerAction(rowIndex, columnIndex)}>{playerSymbol}</button>
               </li>
             ))
             }
