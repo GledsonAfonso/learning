@@ -13,6 +13,6 @@ export interface GameTurn {
 }
 
 export interface GameBoardProps {
-  turns: GameTurn[];
+  gameBoard: BoardGrid;
   onActivePlayerAction: (rowIndex: number, columnIndex: number) => void;
 };

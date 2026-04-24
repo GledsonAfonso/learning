@@ -1,19 +1,9 @@
-import type { BoardGrid, GameBoardProps } from './types';
+import type { GameBoardProps } from './types';
 
 export const GameBoard = ({
-  turns,
+  gameBoard,
   onActivePlayerAction,
 }: GameBoardProps) => {
-  const gameBoard: BoardGrid = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
-
-  for (const turn of turns) {
-    gameBoard[turn.square.row][turn.square.column] = turn.player;
-  }
-
   return (
     <ol id='game-board'>
       {gameBoard.map((row, rowIndex) => (

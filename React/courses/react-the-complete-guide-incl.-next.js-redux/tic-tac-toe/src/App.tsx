@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { GameBoard } from './components/GameBoard/GameBoard';
-import type { GameTurn } from './components/GameBoard/types';
+import type { BoardGrid, GameTurn } from './components/GameBoard/types';
 import { Log } from './components/Log/Log';
 import { Player } from './components/Player/Player';
 
-const deriveActivePlayer = (gameTurns: GameTurn[]) => {
+const deriveActivePlayer = (gameTurns: GameTurn[]): string => {
   let currentPlayer = 'X';
 
   if (gameTurns[0]?.player === 'X') {
@@ -16,7 +16,17 @@ const deriveActivePlayer = (gameTurns: GameTurn[]) => {
 
 export const App = () => {
   const [gameTurns, setGameTurns] = useState<GameTurn[]>([]);
+
   const activePlayer = deriveActivePlayer(gameTurns);
+  const gameBoard: BoardGrid = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+  ];
+
+  for (const turn of gameTurns) {
+    gameBoard[turn.square.row][turn.square.column] = turn.player;
+  }
 
   const handleActivePlayerAction = (rowIndex: number, columnIndex: number) => {
     setGameTurns((previousTurns: GameTurn[]) => {
@@ -53,7 +63,7 @@ export const App = () => {
           />
         </ol>
         <GameBoard
-          turns={gameTurns}
+          gameBoard={gameBoard}
           onActivePlayerAction={handleActivePlayerAction}
         />
       </div>
