@@ -4,18 +4,23 @@ import type { GameTurn } from './components/GameBoard/types';
 import { Log } from './components/Log/Log';
 import { Player } from './components/Player/Player';
 
+const deriveActivePlayer = (gameTurns: GameTurn[]) => {
+  let currentPlayer = 'X';
+
+  if (gameTurns[0]?.player === 'X') {
+    currentPlayer = 'O';
+  }
+
+  return currentPlayer;
+};
+
 export const App = () => {
-  const [activePlayer, setActivePlayer] = useState('X');
   const [gameTurns, setGameTurns] = useState<GameTurn[]>([]);
+  const activePlayer = deriveActivePlayer(gameTurns);
 
   const handleActivePlayerAction = (rowIndex: number, columnIndex: number) => {
-    setActivePlayer(currentActivePlayer => currentActivePlayer === 'X' ? 'O' : 'X');
     setGameTurns((previousTurns: GameTurn[]) => {
-      let currentPlayer = 'X';
-
-      if (previousTurns[0]?.player === 'X') {
-        currentPlayer = 'O';
-      }
+      let currentPlayer = deriveActivePlayer(previousTurns);
 
       const updatedTurns: GameTurn[] = [
         {
