@@ -1,4 +1,4 @@
-import type { GameTurn } from '../GameBoard/types';
+import type { GameTurn } from "../../types";
 
 export interface LogProps {
   turns: GameTurn[];

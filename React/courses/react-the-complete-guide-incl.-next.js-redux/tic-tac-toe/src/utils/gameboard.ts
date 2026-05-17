@@ -1,4 +1,5 @@
-import type { BoardGrid, GameTurn, RowValue } from '../components/GameBoard/types';
+import type { BoardGrid, RowValue } from '../components/GameBoard/types';
+import type { GameTurn } from '../types';
 
 export const getWinner = (
   gameBoard: BoardGrid,

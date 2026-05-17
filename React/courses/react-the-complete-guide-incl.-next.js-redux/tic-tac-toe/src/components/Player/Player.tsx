@@ -5,12 +5,14 @@ export const Player = ({
   initialName,
   symbol,
   isActive,
+  onPlayerNameChange
 }: PlayerProps) => {
   const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditButton = () => {
     setIsEditing((editing) => !editing);
+    onPlayerNameChange(symbol, playerName);
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
