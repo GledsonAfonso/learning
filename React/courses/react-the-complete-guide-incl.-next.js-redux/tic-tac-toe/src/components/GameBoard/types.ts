@@ -10,6 +10,7 @@ interface GameBoardSquare {
 export interface GameTurn {
   square: GameBoardSquare;
   player: string;
+  isWinner: boolean;
 }
 
 export interface GameBoardProps {
