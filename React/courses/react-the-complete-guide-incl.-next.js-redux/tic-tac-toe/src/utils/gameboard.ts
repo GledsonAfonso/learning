@@ -1,70 +1,41 @@
-import type { BoardGrid } from "../components/GameBoard/types";
+import type { BoardGrid, GameTurn, RowValue } from "../components/GameBoard/types";
 
-const isDiagonal = (columnIndex: number, lineIndex: number, indexLimit: number): boolean =>
-  (columnIndex === lineIndex) ||
-  (columnIndex === 0 && lineIndex === indexLimit) ||
-  (lineIndex === 0 && columnIndex === indexLimit);
-const isInvertedDiagonal = (columnIndex: number, lineIndex: number): boolean => columnIndex === lineIndex;
-
-export const isWinner = (
-	columnIndex: number,
-	lineIndex: number,
-  player: string,
+export const getWinner = (
   gameBoard: BoardGrid,
-): boolean => {
-  const indexLimit = gameBoard.length - 1;
-  let linePlayerCount = 0;
-  let columnPlayerCount = 0;
-  let diagonalPlayerCount = 0;
-  let invertedDiagonalPlayerCount = 0;
-
-  for (let j = 0; j < indexLimit; j++) {
-    if (gameBoard[lineIndex][j] === player) {
-      linePlayerCount++;
-    }
+  lastTurn?: GameTurn,
+): string | undefined => {
+  if(!lastTurn) {
+    return;
   }
 
-  if (linePlayerCount === indexLimit) {
-    return true;
+  const {column: columnIndex, row: rowIndex} = lastTurn.square;
+  const player = lastTurn.player
+
+  const rowValidation = gameBoard[rowIndex].every(value => value === player);
+  if (rowValidation) {
+    return player;
   }
 
-  for (let i = 0; i < indexLimit; i++) {
-    if (gameBoard[i][columnIndex] === player) {
-      columnPlayerCount++;
-    }
+  const columnValidation = gameBoard.map(row => row[columnIndex]).every(value => value === player);
+  if (columnValidation) {
+    return player;
   }
 
-  if (columnPlayerCount === indexLimit) {
-    return true;
+  let invertedDiagonalArray: RowValue[] = new Array(gameBoard.length).fill(null);
+  for (let index = 0; index < gameBoard.length; index++) {
+    invertedDiagonalArray[index] = gameBoard[index][index];
+  }
+  if (invertedDiagonalArray.every(value => value === player)) {
+    return player;
   }
 
-  if (isInvertedDiagonal(columnIndex, lineIndex)) {
-    for (let i = 0; i < indexLimit; i++) {
-      if (gameBoard[i][i] === player) {
-        invertedDiagonalPlayerCount++;
-      }
-    }
+  let diagonalArray: RowValue[] = new Array(gameBoard.length).fill(null);
+  let diagonalRowIndex = gameBoard.length - 1;
+  for (let index = 0; index < gameBoard.length; index++) {
+    diagonalArray[index] = gameBoard[diagonalRowIndex][index];
+    diagonalRowIndex--;
   }
-
-  if (invertedDiagonalPlayerCount === indexLimit) {
-    return true;
+  if (diagonalArray.every(value => value === player)) {
+    return player;
   }
-
-  if (isDiagonal(columnIndex, lineIndex, indexLimit)) {
-    for (let i = 0; i < indexLimit; i++) {
-      for (let j = 0; j < indexLimit; j++) {
-        if (isDiagonal(i, j, indexLimit)) {
-          if (gameBoard[i][j] === player) {
-            diagonalPlayerCount++;
-          }
-        }
-      }
-    }
-  }
-
-  if (diagonalPlayerCount === indexLimit) {
-    return true;
-  }
-
-  return false;
 };
