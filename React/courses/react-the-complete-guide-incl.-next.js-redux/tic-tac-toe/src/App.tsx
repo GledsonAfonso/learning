@@ -34,7 +34,7 @@ export const App = () => {
   const isDraw = gameTurns.length === 9 && !winner;
 
   const handleActivePlayerAction = (rowIndex: number, columnIndex: number) => {
-    let currentPlayer = deriveActivePlayer(gameTurns);
+    const currentPlayer = deriveActivePlayer(gameTurns);
 
     setGameTurns((previousTurns: GameTurn[]) => {
       const updatedTurns: GameTurn[] = [
@@ -71,7 +71,7 @@ export const App = () => {
             isActive={activePlayer === 'O'}
           />
         </ol>
-        { (winner || isDraw) && <GameOver winner={winner} onRematchAction={handleRestart}/> }
+        { (winner || isDraw) && <GameOver winner={winner!} onRematchAction={handleRestart}/> }
         <GameBoard
           gameBoard={gameBoard}
           onActivePlayerAction={handleActivePlayerAction}

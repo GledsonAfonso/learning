@@ -1,4 +1,4 @@
-import type { GameOverProps } from "./types";
+import type { GameOverProps } from './types';
 
 export const GameOver = ({
   winner,

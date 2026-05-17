@@ -1,4 +1,4 @@
-import type { BoardGrid, GameTurn, RowValue } from "../components/GameBoard/types";
+import type { BoardGrid, GameTurn, RowValue } from '../components/GameBoard/types';
 
 export const getWinner = (
   gameBoard: BoardGrid,
@@ -9,7 +9,7 @@ export const getWinner = (
   }
 
   const {column: columnIndex, row: rowIndex} = lastTurn.square;
-  const player = lastTurn.player
+  const player = lastTurn.player;
 
   const rowValidation = gameBoard[rowIndex].every(value => value === player);
   if (rowValidation) {
@@ -21,7 +21,7 @@ export const getWinner = (
     return player;
   }
 
-  let invertedDiagonalArray: RowValue[] = new Array(gameBoard.length).fill(null);
+  const invertedDiagonalArray: RowValue[] = new Array(gameBoard.length).fill(null);
   for (let index = 0; index < gameBoard.length; index++) {
     invertedDiagonalArray[index] = gameBoard[index][index];
   }
@@ -29,7 +29,7 @@ export const getWinner = (
     return player;
   }
 
-  let diagonalArray: RowValue[] = new Array(gameBoard.length).fill(null);
+  const diagonalArray: RowValue[] = new Array(gameBoard.length).fill(null);
   let diagonalRowIndex = gameBoard.length - 1;
   for (let index = 0; index < gameBoard.length; index++) {
     diagonalArray[index] = gameBoard[diagonalRowIndex][index];
