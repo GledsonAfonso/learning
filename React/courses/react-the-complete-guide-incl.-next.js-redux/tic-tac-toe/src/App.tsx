@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { GameBoard } from './components/GameBoard/GameBoard';
 import type { BoardGrid, GameTurn } from './components/GameBoard/types';
+import { GameOver } from './components/GameOver/GameOver';
 import { Log } from './components/Log/Log';
 import { Player } from './components/Player/Player';
-import { isWinner } from './utils/gameboard';
-import { GameOver } from './components/GameOver/GameOver';
+import { getWinner } from './utils/gameboard';
 
 const deriveActivePlayer = (gameTurns: GameTurn[]): string => {
   let currentPlayer = 'X';
@@ -30,7 +30,7 @@ export const App = () => {
     gameBoard[turn.square.row][turn.square.column] = turn.player;
   }
 
-  const winner = gameTurns[0]?.isWinner ? gameTurns[0].player : null;
+  const winner = getWinner(gameBoard, gameTurns[0]);
   const isDraw = gameTurns.length === 9 && !winner;
 
   const handleActivePlayerAction = (rowIndex: number, columnIndex: number) => {
@@ -44,13 +44,16 @@ export const App = () => {
             column: columnIndex,
           },
           player: currentPlayer,
-          isWinner: isWinner(columnIndex, rowIndex, currentPlayer, gameBoard),
         },
         ...previousTurns,
       ];
 
       return updatedTurns;
     });
+  };
+
+  const handleRestart = () => {
+    setGameTurns(() => []);
   };
 
   return (
@@ -68,7 +71,7 @@ export const App = () => {
             isActive={activePlayer === 'O'}
           />
         </ol>
-        { (winner || isDraw) && <GameOver winner={winner}/> }
+        { (winner || isDraw) && <GameOver winner={winner} onRematchAction={handleRestart}/> }
         <GameBoard
           gameBoard={gameBoard}
           onActivePlayerAction={handleActivePlayerAction}
