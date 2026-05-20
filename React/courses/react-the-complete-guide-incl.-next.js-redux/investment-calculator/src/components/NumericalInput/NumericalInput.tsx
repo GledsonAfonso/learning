@@ -1,12 +1,12 @@
-import { useState } from "react";
-import type { NumericalInputProps } from "./types";
+import { useState } from 'react';
+import type { NumericalInputProps } from './types';
 
 export const NumericalInput = ({
   id,
   title,
-  initialInputValue,
+  value,
+  onStateChange,
 }: NumericalInputProps) => {
-  const [value, setValue] = useState(initialInputValue);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleInputFocusAndBlur = () => {
@@ -14,10 +14,10 @@ export const NumericalInput = ({
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+    onStateChange(Number(event.target.value));
   };
 
-  let inputType = isEditing ? 'number' : 'text';
+  const inputType = isEditing ? 'number' : 'text';
 
   return (
     <p>

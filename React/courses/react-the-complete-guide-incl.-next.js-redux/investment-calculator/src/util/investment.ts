@@ -1,31 +1,48 @@
-// This function expects a JS object as an argument
-// The object should contain the following properties
-// - initialInvestment: The initial investment amount
-// - annualInvestment: The amount invested every year
-// - expectedReturn: The expected (annual) rate of return
-// - duration: The investment duration (time frame)
-export const calculateInvestmentResults = (input: {
-  initialInvestment: number;
-  annualInvestment: number;
-  expectedReturn: number;
-  duration: number;
-}) => {
-  const annualData = [];
+import type { InvestmentInput, InvestmentResult } from './types';
+
+const objectHash = (obj: unknown) => {
+  const str = JSON.stringify(obj);
+  let hash = 0;
+  
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0; // Convert to a 32-bit integer
+  }
+  
+  return Math.abs(hash).toString(16);
+};
+
+export const calculateInvestmentResults = (
+  input: InvestmentInput
+) => {
+  const annualData: InvestmentResult[] = [];
   let investmentValue = input.initialInvestment;
 
   for (let i = 0; i < input.duration; i++) {
     const interestEarnedInYear = investmentValue * (input.expectedReturn / 100);
     investmentValue += interestEarnedInYear + input.annualInvestment;
+
+    const totalInterest = (annualData[i-1]?.totalInterest ?? 0) + interestEarnedInYear;
+    const annualInvestment = investmentValue - totalInterest;
+
+    const result = {
+      year: i + 1,
+      interest: interestEarnedInYear,
+      totalInterest,
+      valueEndOfYear: investmentValue,
+      annualInvestment,
+    };
+    const resultId = objectHash(result);
+
     annualData.push({
-      year: i + 1, // year identifier
-      interest: interestEarnedInYear, // the amount of interest earned in this year
-      valueEndOfYear: investmentValue, // investment value at end of year
-      annualInvestment: input.annualInvestment, // investment added in this year
+      id: resultId,
+      ...result,
     });
   }
 
   return annualData;
-}
+};
 
 // The browser-provided Intl API is used to prepare a formatter object
 // This object offers a "format()" method that can be used to format numbers as currency
