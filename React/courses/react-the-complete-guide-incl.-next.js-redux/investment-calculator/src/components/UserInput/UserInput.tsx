@@ -1,10 +1,10 @@
 import { NumericalInput } from '../NumericalInput/NumericalInput';
-import type { UserInputPayload } from './types';
+import type { UserInputProps } from './types';
 
 export const UserInput = ({
   input,
   onChange,
-}: UserInputPayload) => {
+}: UserInputProps) => {
   return (
     <section id='user-input'>
       <div className='input-group'>

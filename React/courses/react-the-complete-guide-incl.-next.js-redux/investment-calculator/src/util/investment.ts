@@ -1,5 +1,5 @@
+import type { InvestmentResult } from '../components/Results/types';
 import type { InvestmentInput } from '../components/UserInput/types';
-import type { InvestmentResult } from './types';
 
 const objectHash = (obj: unknown) => {
   const str = JSON.stringify(obj);

@@ -7,7 +7,7 @@ export interface InvestmentInput {
 
 type InputOnChangeFn = (inputProperty: keyof InvestmentInput, event: React.ChangeEvent<HTMLInputElement>) => void;
 
-export interface UserInputPayload {
+export interface UserInputProps {
   input: InvestmentInput;
   onChange: InputOnChangeFn;
 }
