@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { InvestmentInput } from './components/UserInput/types';
 import { UserInput } from './components/UserInput/UserInput';
 import { calculateInvestmentResults, formatter } from './util/investment';
+import { Header } from './components/Header/Header';
 
 export const App = () => {
   const [input, setInput] = useState<InvestmentInput>({
@@ -23,6 +24,7 @@ export const App = () => {
 
   return (
     <>
+      <Header />
       <UserInput input={input} onChange={handleInputChange} />
 
       <table id='result'>
