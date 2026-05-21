@@ -27,6 +27,9 @@ export const App = () => {
     <>
       <Header />
       <UserInput input={input} onChange={handleInputChange} />
+
+      { (input.duration < 1) ? <p className='center'>Duration needs to be a positive number</p> : null }
+
       <Results results={results} />
     </>
   );
