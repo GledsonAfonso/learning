@@ -1,51 +1,30 @@
 import { useState } from 'react';
-import { NumericalInput } from './components/NumericalInput/NumericalInput';
+import type { InvestmentInput } from './components/UserInput/types';
+import { UserInput } from './components/UserInput/UserInput';
 import { calculateInvestmentResults, formatter } from './util/investment';
 
 export const App = () => {
-  const [initialInvestment, setInitialInvestment] = useState(0);
-  const [annualInvestment, setAnnualInvestment] = useState(0);
-  const [expectedReturn, setExpectedReturn] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const results = calculateInvestmentResults({
-    initialInvestment,
-    annualInvestment,
-    expectedReturn,
-    duration,
+  const [input, setInput] = useState<InvestmentInput>({
+    initialInvestment: 0,
+    annualInvestment: 0,
+    expectedReturn: 0,
+    duration: 0,
   });
+  const results = calculateInvestmentResults(input);
+
+  const handleInputChange = (inputProperty: string, event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(event.target.value);
+
+    setInput((previousInput) => ({
+      ...previousInput,
+      [inputProperty]: value,
+    }));
+  };
 
   return (
     <>
-      <section id='user-input'>
-        <div className='input-group'>
-          <NumericalInput
-            id='initial-investment'
-            title='INITIAL INVESTMENT'
-            value={initialInvestment}
-            onStateChange={setInitialInvestment}
-          />
-          <NumericalInput
-            id='annual-investment'
-            title='ANNUAL INVESTMENT'
-            value={annualInvestment}
-            onStateChange={setAnnualInvestment}
-          />
-        </div>
-        <div className='input-group'>
-          <NumericalInput
-            id='expected-return'
-            title='EXPECTED RETURN'
-            value={expectedReturn}
-            onStateChange={setExpectedReturn}
-          />
-          <NumericalInput
-            id='duration'
-            title='DURATION'
-            value={duration}
-            onStateChange={setDuration}
-          />
-        </div>
-      </section>
+      <UserInput input={input} onChange={handleInputChange} />
+
       <table id='result'>
         <thead>
           <tr>

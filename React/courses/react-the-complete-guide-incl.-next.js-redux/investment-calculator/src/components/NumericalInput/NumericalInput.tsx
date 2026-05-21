@@ -13,10 +13,6 @@ export const NumericalInput = ({
     setIsEditing((editing) => !editing);
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onStateChange(Number(event.target.value));
-  };
-
   const inputType = isEditing ? 'number' : 'text';
 
   return (
@@ -27,7 +23,7 @@ export const NumericalInput = ({
         type={inputType}
         required
         value={value}
-        onChange={handleOnChange}
+        onChange={onStateChange}
         onFocus={handleInputFocusAndBlur}
         onBlur={handleInputFocusAndBlur}
       />
