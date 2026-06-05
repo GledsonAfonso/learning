@@ -1,32 +1,17 @@
 import { useState } from 'react';
-import type { Time } from '../../types';
-import { calculateTime } from '../../utils/clock';
 
-export const Clock = ({
-  hour,
-  minute,
-  second,
-}: Time) => {
-  const [timeDetails, setTimeDetails] = useState<Time>({
-    hour,
-    minute,
-    second,
-  });
-
+export const Clock = () => {
   console.log('Rendering Clock component');
 
+  const [date, setDate] = useState(new Date());
+
   setInterval(() => {
-    const newTime = calculateTime(timeDetails);
-    setTimeDetails(() => ({ ...newTime }));
+    setDate(() => new Date());
   }, 1000);
 
   return (
     <section id='clock'>
-      <p className='time-slot'>{timeDetails.hour}</p>
-      <p className='delimiter'>:</p>
-      <p className='time-slot'>{timeDetails.minute}</p>
-      <p className='delimiter'>:</p>
-      <p className='time-slot'>{timeDetails.second}</p>
+      <p className='time-slot'>{`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`}</p>
     </section>
   );
 };
